@@ -5,6 +5,8 @@ import Sort from './components/Sort/Sort';
 
 import './scss/app.scss';
 
+import pizzas from "./assets/pizzas.json";
+
 function App() {
   return (
     <div className="wrapper">
@@ -23,7 +25,11 @@ function App() {
           <h2 className="content__title">All pizzas</h2>
           <div className="content__items">
             
-            <PizzaBlock title='Cheeseburger pizza' price={6.32} />
+            {
+              pizzas.map((pizzaItem) => (
+                <PizzaBlock {...pizzaItem} />
+              ))
+            }
             
           </div>
         </div>

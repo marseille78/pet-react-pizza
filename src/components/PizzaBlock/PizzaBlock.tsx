@@ -2,42 +2,53 @@ import { FC, useState } from "react";
 
 interface IPizzaBlockProps {
   title: string;
-  price: number;
-};
+  price: string;
+  imageUrl: string;
+  types: number[];
+  sizes: number[];
+}
 
-const PizzaBlock: FC<IPizzaBlockProps> = ({ title, price }) => {
-  const [pizzaCount, setPizzaCount] = useState<number>(0);
+const PizzaBlock: FC<IPizzaBlockProps> = ({
+  title,
+  price,
+  imageUrl,
+  types,
+  sizes,
+}) => {
+  const [activeTypeIdx, setActiveTypeIdx] = useState<number>(0);
+  const [activeSizeIdx, setActiveSizeIdx] = useState<number>(0);
 
-  const updateCount = () => {
-    setPizzaCount(pizzaCount + 1);
-  };
+  const typesAll = ["Thin", "Traditional"];
+
+  const typesList = types.map((typeItem, idx) => (
+    <li
+      className={activeTypeIdx === idx ? "active" : ""}
+      onClick={() => setActiveTypeIdx(idx)}
+    >
+      {typesAll[typeItem]}
+    </li>
+  ));
+
+  const sizesList = sizes.map((sizeItem, idx) => (
+    <li
+      className={idx === activeSizeIdx ? "active" : ""}
+      onClick={() => setActiveSizeIdx(idx)}
+    >
+      {sizeItem} cm
+    </li>
+  ));
 
   return (
     <div className="pizza-block">
-      <img
-        className="pizza-block__image"
-        src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-        alt="Pizza"
-      />
+      <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
-        <ul>
-          <li className="active">thin</li>
-          <li>traditional</li>
-        </ul>
-        <ul>
-          <li className="active">26 cm</li>
-          <li>30 cm</li>
-          <li>40 cm</li>
-        </ul>
+        <ul>{typesList}</ul>
+        <ul>{sizesList}</ul>
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">from ${price}</div>
-        <button
-          type="button"
-          className="button button--outline button--add"
-          onClick={updateCount}
-        >
+        <button type="button" className="button button--outline button--add">
           <svg
             width="12"
             height="12"
@@ -51,7 +62,7 @@ const PizzaBlock: FC<IPizzaBlockProps> = ({ title, price }) => {
             />
           </svg>
           <span>Add</span>
-          <i>{pizzaCount}</i>
+          <i>0</i>
         </button>
       </div>
     </div>
