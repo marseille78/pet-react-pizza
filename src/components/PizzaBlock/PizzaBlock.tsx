@@ -18,19 +18,21 @@ const PizzaBlock: FC<IPizzaBlockProps> = ({
   const [activeTypeIdx, setActiveTypeIdx] = useState<number>(0);
   const [activeSizeIdx, setActiveSizeIdx] = useState<number>(0);
 
-  const typesAll = ["Thin", "Traditional"];
+  const typeNames = ["Thin", "Traditional"];
 
   const typesList = types.map((typeItem, idx) => (
     <li
+      key={idx}
       className={activeTypeIdx === idx ? "active" : ""}
       onClick={() => setActiveTypeIdx(idx)}
     >
-      {typesAll[typeItem]}
+      {typeNames[typeItem]}
     </li>
   ));
 
   const sizesList = sizes.map((sizeItem, idx) => (
     <li
+      key={idx}
       className={idx === activeSizeIdx ? "active" : ""}
       onClick={() => setActiveSizeIdx(idx)}
     >

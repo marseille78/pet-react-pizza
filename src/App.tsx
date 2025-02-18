@@ -27,7 +27,7 @@ function App() {
             
             {
               pizzas.map((pizzaItem) => (
-                <PizzaBlock {...pizzaItem} />
+                <PizzaBlock key={pizzaItem.id} {...pizzaItem} />
               ))
             }
             

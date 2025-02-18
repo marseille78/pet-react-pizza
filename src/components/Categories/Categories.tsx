@@ -8,6 +8,7 @@ const Categories = () => {
   const categoriesElements = categories.map((category, idx) => {
     return (
       <li
+        key={idx}
         className={idx === categoryActiveIndex ? "active" : ""}
         onClick={() => setCategoryActiveIndex(idx)}
       >

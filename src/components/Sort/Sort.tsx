@@ -1,4 +1,35 @@
+import { MouseEventHandler, useState } from "react";
+
 const Sort = () => {
+  const [open, setOpen] = useState<boolean>(false);
+  const [selectedSort, setSelectedSort] = useState<number>(0);
+  const listSortItems = ["popularity", "price", "alphabet"];
+
+  const handleToggleClick: MouseEventHandler<HTMLSpanElement> = () => {
+    setOpen(!open);
+  };
+
+  const changeSortValue = (idx: number) => {
+    setSelectedSort(idx);
+    setOpen(false);
+  };
+
+  const sortPopup = (
+    <div className="sort__popup">
+      <ul>
+        {listSortItems.map((item, idx) => (
+          <li
+            key={idx}
+            className={idx === selectedSort ? "active" : ""}
+            onClick={() => changeSortValue(idx)}
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+
   return (
     <div className="sort">
       <div className="sort__label">
@@ -15,15 +46,9 @@ const Sort = () => {
           />
         </svg>
         <b>Sorting by:</b>
-        <span>popularity</span>
+        <span onClick={handleToggleClick}>{listSortItems[selectedSort]}</span>
       </div>
-      <div className="sort__popup">
-        <ul>
-          <li className="active">popularity</li>
-          <li>price</li>
-          <li>alphabet</li>
-        </ul>
-      </div>
+      {open && sortPopup}
     </div>
   );
 };
