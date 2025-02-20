@@ -1,45 +1,28 @@
-import { useEffect, useState } from "react";
-
-import Categories from "./components/Categories/Categories";
-import Header from "./components/Header/Header";
-import PizzaBlock from "./components/PizzaBlock/PizzaBlock";
-import Sort from "./components/Sort/Sort";
-
-import { IItemProduct } from "./interfaces/IItemProduct";
-import { pizzaService } from "./services/pizzaService";
+import { FC } from "react";
+import NotFound from "./pages/NotFound";
+import Header from "./components/Header";
 
 import "./scss/app.scss";
+import { Route, Routes } from "react-router";
+import Home from "./pages/Home";
+import Cart from "./pages/Cart";
 
-function App() {
-  const [items, setItems] = useState<IItemProduct[]>([]);
-  pizzaService.getResource();
-
-  useEffect(() => {
-    const request = pizzaService.getResource();
-    request.then((data) => setItems(data));
-  }, []);
-
+const App: FC = () => {
   return (
     <div className="wrapper">
       <Header />
 
       <div className="content">
         <div className="container">
-          <div className="content__top">
-            <Categories />
-
-            <Sort />
-          </div>
-          <h2 className="content__title">All pizzas</h2>
-          <div className="content__items">
-            {items.map((pizzaItem) => (
-              <PizzaBlock key={pizzaItem.id} {...pizzaItem} />
-            ))}
-          </div>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="cart" element={<Cart />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default App;
